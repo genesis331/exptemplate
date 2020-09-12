@@ -1,20 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Project from './pages/project';
+import Overview from './pages/overview';
+import { GeistProvider, CssBaseline } from '@geist-ui/react';
+import { Mode, useLightSwitch } from 'use-light-switch';
+import { Note, Spacer, Description, Tabs, Text } from '@geist-ui/react';
+import { AlertOctagon } from '@geist-ui/react-icons';
+import logoblack from './assets/LOGO-BLACK-WEB.svg';
+import logowhite from './assets/LOGO-WHITE-WEB.svg';
 
 function App() {
+    const [logoDisplay, setLogoDisplay] = useState(logoblack);
+    const [themeType, setThemeType] = useState('light');
+    const mode = useLightSwitch();
+    useEffect(() => {
+        if (mode === Mode.Dark) {
+            setThemeType('dark');
+            setLogoDisplay(logowhite);
+        } else {
+            setThemeType('light');
+            setLogoDisplay(logoblack);
+        }
+    },[mode]);
+
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <GeistProvider theme={{ type: themeType }}>
+            <CssBaseline />
+            <div className="base">
+                <div className="mobile-block">
+                    <div className="mobile-block-center">
+                        <AlertOctagon size="4rem"/>
+                        <Text h5>Unsupported device detected</Text>
+                        <Spacer/>
+                        <Note type="secondary" small>Visit this website in a larger screen device.</Note>
+                    </div>
+                </div>
+                <div className="header">
+                    <div className="header-1">
+                        <div className="header-1-logo">
+                            <img src={logoDisplay} alt="Logo" draggable={false}/>
+                        </div>
+                        <div className="header-1-title">
+                            <Description title="Project Type" content={<Text b size="1.25rem">Project Title</Text>}/>
+                        </div>
+                    </div>
+                    <div className="header-2">
+                    
+                    </div>
+                </div>
+                <div className="content">
+                    <Tabs initialValue="1" style={{ width: "100%" }}>
+                        <Tabs.Item label={<Text h6>Overview</Text>} value="1">
+                            <Overview />
+                        </Tabs.Item>
+                        <Tabs.Item label={<Text h6>Project</Text>} value="2">
+                            <Project />
+                        </Tabs.Item>
+                    </Tabs>
+                </div>
+            </div>
+        </GeistProvider>
     );
 }
 
