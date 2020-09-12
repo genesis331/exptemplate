@@ -48,8 +48,8 @@ function App() {
                     
                     </div>
                 </div>
-                <div className="content">
-                    <Tabs initialValue="1" style={{ width: "100%" }}>
+                <div className="project-content">
+                    <Tabs initialValue="1" style={{ width: "100%", height: "100%" }}>
                         <Tabs.Item label={<Text h6>Overview</Text>} value="1">
                             <Overview />
                         </Tabs.Item>
